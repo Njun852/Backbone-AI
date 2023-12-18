@@ -10,14 +10,14 @@ app.use(cors())
 const model = genAI.getGenerativeModel({model: 'models/gemini-pro'})
 const chat = model.startChat()
 
-app.get('/:prompt', (req, res) => {
+app.get('/', (req, res) => {
     async function run(prompt){
         const result = await chat.sendMessage(prompt)
         const response = result.response
         const text = response.text()
         res.status(200).json({success: true, response: text})
     }
-    run(req.params.prompt)
+    run(req.query.prompt)
     // console.log(req.params.prompt)
 })
 app.listen(5050, () => {

@@ -11,7 +11,7 @@ export default function Form(props){
     }
 
     async function getResponse(prompt){
-        fetch(`http://localhost:5050/${prompt}`)
+        fetch(`http://localhost:5050/?prompt=${prompt}`)
         .then(data => data.json())
         .then(data => props.submit({
             sender: 'ai',
