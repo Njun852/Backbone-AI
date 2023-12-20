@@ -1,23 +1,15 @@
 import React from "react"
 import {nanoid} from "nanoid"
-
+import axios from "axios"
 export default function Form(props){
-
-
     const [message, setMessage] = React.useState("")
     function typeMessage(event){
         const {value} = event.target
         setMessage(value)
     }
-
     async function getResponse(prompt){
-        fetch(`http://localhost:5050/?prompt=${prompt}`)
-        .then(data => data.json())
-        .then(data => props.submit({
-            sender: 'ai',
-            message: data.response,
-            id: nanoid()
-        }))
+        const {data} = await axios.get(`http://localhost:5050/?prompt=${prompt}`)
+        props.submit({sender: 'ai', message:data.response, id: nanoid()})
     }
     function handleSubmit(event){
         event.preventDefault()
